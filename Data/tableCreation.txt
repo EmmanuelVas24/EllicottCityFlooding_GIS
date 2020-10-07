@@ -1,0 +1,38 @@
+CREATE TABLE Streams
+(
+  StreamID INT NOT NULL,
+  StreamOrder INT,
+  StreamLength INT,
+  PRIMARY KEY (StreamID)
+);
+
+CREATE TABLE Catchments
+(
+  CatchmentID INT NOT NULL,
+  Area INT,
+  StreamID,
+  PRIMARY KEY (CatchmentID),
+  FOREIGN KEY (StreamID) REFERENCES Streams(StreamID)
+);
+
+CREATE TABLE LandCover
+(
+  LCID INT NOT NULL,
+  LandCoverName VARCHAR(30) NOT NULL,
+  PRIMARY KEY (LCID)
+);
+
+CREATE TABLE LandCoverPolygon
+(
+  PolygonID INT NOT NULL,
+  LCID INT,
+  HydroSG CHAR,
+  CN INT,
+  Acres INT,
+  PCT_Area INT,
+  CCN INT,
+  CatchmentID INT,
+  PRIMARY KEY (PolygonID),
+  FOREIGN KEY (CatchmentID) REFERENCES Catchments(CatchmentID),
+  FOREIGN KEY (LCID) REFERENCES LandCover(LCID)
+);
